@@ -1,0 +1,124 @@
+{% extends 'templates/base.html' %}
+
+{% block title %}Contact Me | {% endblock %}
+
+{% block content %}
+<div class="container">
+
+	{% if specials %}
+		<div class="jumbotron">
+			<h2 class="text-success">On special!</h2>
+			{% for painting in specials %}
+				<div class="painting-item" data-id="{{ painting.key.urlsafe() }}">
+					<h4 class="text-danger price">R{{ '{0:,}'.format(painting.price) }}</h4>
+					<a data-lightbox="gallery" href="img/{{ painting.key.urlsafe() }}?w590=&h=460">
+						<img src="img/{{ painting.key.urlsafe() }}?w50=&h=50" class="img-responsive" alt="{{ painting.description }}">
+					</a>
+					<h3>{{ painting.name }}</h3>
+					<p>{{ painting.description }}</p>
+					<p><button class="btn btn-sm btn-primary fill-modal" data-toggle="modal" data-target="#modalRequest">Request</button></p>
+				</div>
+				{% if not loop.last %}
+					<hr>
+				{% endif %}
+			{% endfor %}
+		</div>
+	{% endif %}
+
+	{% if originals %}
+		<h4 class="lead">Buy original paintings</h4>
+		<div class="flexbox-available">
+			{% for painting in originals %}
+				<div class="thumbnail flexbox-item painting-item" data-id="{{ painting.key.urlsafe() }}">
+					<a data-lightbox="gallery" href="img/{{ painting.key.urlsafe() }}?w590=&h=460">
+						<img src="img/{{ painting.key.urlsafe() }}?w50=&h=50" class="img-responsive" alt="{{ painting.description }}">
+					</a>
+					<div class="caption">
+						<h6 class="pull-right text-muted price">R{{ '{0:,}'.format(painting.price) }}</h6>
+						<h4>{{ painting.name }}</h4>
+						<p>{{ painting.description }}</p>
+						<p><button class="btn btn-sm btn-primary fill-modal" data-toggle="modal" data-target="#modalRequest">Request</button></p>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+
+	{% if prints %}
+		<h4 class="lead">Paintings available as a print</h4>
+		<div class="flexbox-available">
+			{% for painting in prints %}
+				<div class="thumbnail flexbox-item painting-item" data-id="{{ painting.key.urlsafe() }}">
+					<a data-lightbox="gallery" href="img/{{ painting.key.urlsafe() }}?w590=&h=460">
+						<img src="img/{{ painting.key.urlsafe() }}?w50=&h=50" class="img-responsive" alt="{{ painting.description }}">
+					</a>
+					<div class="caption">
+						<h6 class="pull-right text-muted price">R{{ '{0:,}'.format(painting.copy_price) }}</h6>
+						<h4>{{ painting.name }}</h4>
+						<p>{{ painting.description }}</p>
+						<p><button class="btn btn-sm btn-primary fill-modal" data-toggle="modal" data-target="#modalRequest">Request</button></p>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+
+	</div>
+</div>
+
+<div class="modal fade" id="modalRequest" tabindex="-1" role="dialog" aria-labelledby="requestLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title" id="requestLabel">Please provide your details to request this painting</h4>
+			</div>
+			<form role="form" id="request">
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="thumbnail">
+						        <img data-src="" alt="">
+								<div class="caption">
+									<h3></h3>
+									<p></p>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6" id="modalContent">
+							<input type="hidden" value="" id="painting_id" name="painting_id" />
+							<div class="form-group">
+								<label for="name">Your name</label>
+								<input type="text" name="name" class="form-control" id="name" placeholder="Your name" required="true">
+							</div>
+							<div class="form-group">
+								<label for="email">Email address</label>
+								<input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required="true">
+							</div>
+							<div class="form-group">
+								<label for="number">Contact number</label>
+								<input type="number" name="number" class="form-control" id="number" placeholder="0821231234" required="true">
+							</div>
+						</div>
+						<div id="modalSuccess">
+							<h4>Request submitted.</h4>
+							<p>I will contact you shortly</p>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-success" id="btn" data-loading-text="Requesting...">Request</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block js %}
+	{{ super() }}
+	<script src="/assets/js/available.js"></script>
+{% endblock %}

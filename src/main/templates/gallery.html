@@ -1,0 +1,24 @@
+{% extends 'templates/base.html' %}
+
+{% block content %}
+	<div class="container">
+		<div class="flexbox-available">
+
+			{% for painting in paintings %}
+				<div class="thumbnail flexbox-item painting-item" data-id="{{ painting.key.urlsafe() }}">
+					<a data-lightbox="gallery" href="/img/{{ painting.key.urlsafe() }}?w590=&h=460">
+						<img src="/img/{{ painting.key.urlsafe() }}?w50=&h=50" class="img-responsive" alt="{{ painting.description }}">
+					</a>
+					<div class="caption">
+						<h6 class="pull-right text-muted price">
+							<span class="label label-{{ 'danger' if (painting.sold and not painting.copy) else 'success' }}">{{ 'SOLD' if (painting.sold and not painting.copy) else 'AVAILABLE' }}</span>
+						</h6>
+						<h4>{{ painting.name }}</h4>
+						<p>{{ painting.description }}</p>
+					</div>
+				</div>
+			{% endfor %}
+
+		</div>
+	</div>
+{% endblock %}

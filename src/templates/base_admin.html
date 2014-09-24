@@ -7,13 +7,11 @@
 	<meta name="description" content="The art of Jeanne Marais">
 	<link rel="icon" href="../../favicon.ico">
 
-	<title>{% block title %}{% endblock %}Jeanne Marais</title>
+	<title>Jeanne Marais</title>
 
 	{% block css %}
 		<link href="/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link href="/vendor/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
-		<link href="/vendor/lightbox2/css/lightbox.css" rel="stylesheet" />
-		<link href='http://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Kristi|Meie+Script' rel='stylesheet' type='text/css'>
 		<link href="/assets/css/main.css" rel="stylesheet" />
 	{% endblock %}
 
@@ -21,20 +19,19 @@
 
 <body>
 
-	{% include 'templates/nav.html' %}
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+		        <a class="navbar-brand" href="/">Jeanne Marais</a>
+			</div>
+		</div>
+	</nav>
 
 	{% block content %}{% endblock %}
-
-	<footer>
-		<p class="pull-right">Jeanne Marais</p>
-		<p>&copy; 2014</p>
-	</footer>
-
 
 	{% block js %}
 		<script src="/vendor/jquery/dist/jquery.min.js"></script>
 		<script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-		<script src="/vendor/lightbox2/js/lightbox.min.js"></script>
 	{% endblock %}
 
 </body>

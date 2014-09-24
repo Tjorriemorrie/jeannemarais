@@ -6,7 +6,7 @@ threadsafe: yes
 default_expiration: "1s"
 
 builtins:
-- remote_api: on
+- remote_api: off
 
 inbound_services:
 - warmup
@@ -17,11 +17,16 @@ libraries:
   version: 2.5.2
 - name: jinja2
   version: 2.6
+- name: PIL
+  version: 1.1.7
 
 
 handlers:
 - url: /vendor
   static_dir: vendor
+
+- url: /assets
+  static_dir: assets
 
 - url: /admin.*
   script: src.app.wsgi

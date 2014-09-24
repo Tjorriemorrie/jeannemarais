@@ -1,0 +1,65 @@
+{% extends 'templates/base_admin.html' %}
+
+{% block content %}
+	<div class="container">
+		<!--<h1 class="page-header">Upload new painting</h1>-->
+		<form enctype="multipart/form-data" method="post" role="form">
+			<div class="form-group">
+				<label for="name">Name of painting</label>
+				<input type="text" class="form-control" id="name" name="name" value="{{ painting.name }}" placeholder="Name of the painting" autofocus="true" autocomplete="off" required="true" />
+			</div>
+			<div class="form-group">
+				<label for="description">Description of painting</label>
+				<input type="text" class="form-control" id="description" name="description" value="{{ painting.description }}" placeholder="Very long description of what the painting is (this helps google to index this page)" autocomplete="off" required="true" />
+			</div>
+			<div class="form-group">
+				<label for="price">Price:</label>
+				<input type="number" class="form-control" id="price" name="price" value="{{ painting.price }}" placeholder="Cost of painting in Rands only (no cents, no commas, no R) e.g. 12000" autocomplete="off" required="true" />
+			</div>
+			<div class="form-group">
+				<label for="gallery">Gallery of painting</label>
+				<select name="gallery" id="gallery" class="form-control" required="true">
+					{% for gallery in galleries %}
+						<option value="{{ gallery|lower }}" {{ 'selected' if painting.gallery == gallery }}>{{ gallery|title }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="sold" {{ 'checked' if painting.sold }}> Sold? Check this if the painting has been sold.
+                    </label>
+                </div>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="special" {{ 'checked' if painting.special }}> On special? Check this if the painting is on a special.
+                    </label>
+                </div>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="copy" {{ 'checked' if painting.copy }}> Print? Check this if the painting is available as a print/copy.
+                    </label>
+                </div>
+			</div>
+			<div class="form-group">
+				<label for="copy_price">Price for print <small>(optional)</small>:</label>
+				<input type="number" class="form-control" id="copy_price" name="copy_price" value="{{ painting.copy_price }}" placeholder="Cost of print for painting in Rands only (no cents, no commas, no R) e.g. 12000" autocomplete="off" required="false" />
+			</div>
+			{% if painting.key %}
+			    <input type="hidden" name="key" value="{{ painting.key.urlsafe() }}">
+			{% else %}
+				<div class="form-group">
+				    <label for="image">Image of the painting</label>
+				    <input type="file" id="image" name="image" required="true">
+				    <p class="help-block">Upload the highest resolution image available. It will be automatically resized into thumbnails where applicable.</p>
+			    </div>
+			{% endif %}
+			<button type="submit" class="btn btn-primary">Submit</button>
+			<a role="button" class="btn btn-default" href="/admin">Back</a>
+		</form>
+	</div>
+{% endblock %}

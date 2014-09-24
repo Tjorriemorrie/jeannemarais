@@ -1,0 +1,43 @@
+{% extends 'templates/base_admin.html' %}
+
+{% block content %}
+	<div class="container">
+		<a class="btn btn-primary pull-right" role="button" href="/admin/form">Upload new</a>
+		<h5>{{ paintings|length }} paintings</h5>
+
+		<ul class="nav nav-tabs" role="tablist">
+			{% for gallery in galleries %}
+				<li class="{{ 'active' if tab == gallery }}"><a href="#{{ gallery }}" role="tab" data-toggle="tab">{{ gallery|title }}</a></li>
+			{% endfor %}
+		</ul>
+
+		<div class="tab-content">
+			{% for gallery in galleries %}
+				<div class="tab-pane {{ 'active' if tab == gallery }}" id="{{ gallery }}">
+					<br/>
+					<div class="flexbox-admin">
+						{% for painting in paintings if painting.gallery == gallery %}
+							<div class="thumbnail flexbox-item">
+								<img src="img/{{ painting.key.urlsafe() }}?w=186&h=119" alt="{{ painting.description }}" />
+								<div class="caption">
+									<h4>{{ painting.name }}</h4>
+									<h6>Price: R{{ painting.price }}</h6>
+									<h6>Special: {{ 'Yes' if painting.special else 'No' }}</h6>
+									<h6>Sold: {{ 'Yes' if painting.sold else 'No' }}</h6>
+									<h6>Print: {{ 'Yes' if painting.copy else 'No' }}</h6>
+									<h6>Print price: R{{ painting.copy_price }}</h6>
+									<p>{{ painting.description }}</p>
+									<p>
+										<a class="btn btn-xs btn-default" href="/admin/form?key={{ painting.key.urlsafe() }}">Edit</a>
+										<a class="btn btn-xs btn-danger" href="/admin/delete?tab={{ painting.gallery }}&key={{ painting.key.urlsafe() }}" onclick="return confirm('Are you sure you want to delete?')">Del</a>
+									</p>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+
+	</div>
+{% endblock %}
